@@ -68,16 +68,16 @@ public class TElementoAB<T> implements IElementoAB<T> {
      * @return Elemento encontrado. En caso de no encontrarlo, retorna nulo.
      */
     public TElementoAB<T> buscar(Comparable unaEtiqueta) {
-        if (etiqueta == unaEtiqueta) {
+        if (etiqueta.equals(unaEtiqueta)) {
             return this;
         }
 
-        if (this.hijoDer != null && etiqueta.compareTo(unaEtiqueta) > 0) {
-            return this.hijoDer.buscar(unaEtiqueta);
+        if (this.hijoIzq != null && etiqueta.compareTo(unaEtiqueta) > 0) {
+            return this.hijoIzq.buscar(unaEtiqueta);
         }
 
-        if (this.hijoIzq != null) {
-            return this.hijoIzq.buscar(unaEtiqueta);
+        if (this.hijoDer != null) {
+            return this.hijoDer.buscar(unaEtiqueta);
         }
 
         return null;
@@ -94,35 +94,25 @@ public class TElementoAB<T> implements IElementoAB<T> {
         Comparable elemEtiqueta = elemento.getEtiqueta();
 
         if (etiqueta == elemEtiqueta) {
+            System.out.println(counter);
             return false;
         }
 
-        counter += 1;
+        counter++;
 
         if (etiqueta.compareTo(elemEtiqueta) > 0) {
             if (hijoDer != null) {
-                hijoDer.insertar(elemento, counter);
-
-                return true;
+                return hijoDer.insertar(elemento, counter);
             }
-
             hijoDer = elemento;
-
-            System.out.println(counter);
-
-            return true;
+        } else {
+            if (hijoIzq != null) {
+                return hijoIzq.insertar(elemento, counter);
+            }
+            hijoIzq = elemento;
         }
-
-        if (hijoIzq != null) {
-            hijoIzq.insertar(elemento, counter);
-
-            return true;
-        }
-
-        hijoIzq = elemento;
-
+    
         System.out.println(counter);
-
         return true;
     }
 
