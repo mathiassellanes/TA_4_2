@@ -20,15 +20,15 @@ public class TArbolBB<T> implements IArbolBB<T> {
      */
 
     @Override
-    public boolean insertar(TElementoAB<T> unElemento) {
+    public InsertResult insertar(TElementoAB<T> unElemento) {
         if (raiz == null) {
 
             raiz = unElemento;
 
-            return true;
+            return new InsertResult(0, true);
         }
 
-        boolean insercion = raiz.insertar(unElemento, 0);
+        InsertResult insercion = raiz.insertar(unElemento, 0);
 
         return insercion;
     }
@@ -41,12 +41,12 @@ public class TArbolBB<T> implements IArbolBB<T> {
      *                    .
      * @return Elemento encontrado. En caso de no encontrarlo, retorna nulo.
      */
-    public TElementoAB<T> buscar(Comparable unaEtiqueta) {
+    public SearchResult buscar(Comparable unaEtiqueta) {
         if (raiz == null) {
             return null;
         }
 
-        return raiz.buscar(unaEtiqueta);
+        return raiz.buscar(unaEtiqueta, 0);
     }
 
     /**

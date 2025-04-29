@@ -67,20 +67,23 @@ public class TElementoAB<T> implements IElementoAB<T> {
      * @param unaEtiqueta del nodo a buscar
      * @return Elemento encontrado. En caso de no encontrarlo, retorna nulo.
      */
-    public TElementoAB<T> buscar(Comparable unaEtiqueta) {
+    @Override
+    public SearchResult buscar(Comparable unaEtiqueta, int counter) {
         if (etiqueta.equals(unaEtiqueta)) {
-            return this;
+            return new SearchResult(counter, this);
         }
 
         if (this.hijoIzq != null && etiqueta.compareTo(unaEtiqueta) > 0) {
-            return this.hijoIzq.buscar(unaEtiqueta);
+            counter++;
+            return this.hijoIzq.buscar(unaEtiqueta, counter);
         }
 
         if (this.hijoDer != null) {
-            return this.hijoDer.buscar(unaEtiqueta);
+            counter++;
+            return this.hijoDer.buscar(unaEtiqueta, counter);
         }
 
-        return null;
+        return new SearchResult(0, null);
     }
 
     /**
@@ -90,30 +93,32 @@ public class TElementoAB<T> implements IElementoAB<T> {
      * @return Exito de la operaci�n.
      */
     @Override
-    public boolean insertar(TElementoAB<T> elemento, int counter) {
+    public InsertResult insertar(TElementoAB<T> elemento, int counter) {
         Comparable elemEtiqueta = elemento.getEtiqueta();
 
-        if (etiqueta == elemEtiqueta) {
-            System.out.println(counter);
-            return false;
+        if (etiqueta.equals(elemEtiqueta)) {
+            return new InsertResult(0, false);
         }
 
         counter++;
 
-        if (etiqueta.compareTo(elemEtiqueta) > 0) {
+        if (etiqueta.compareTo(elemEtiqueta) < 0) {
             if (hijoDer != null) {
                 return hijoDer.insertar(elemento, counter);
             }
+
             hijoDer = elemento;
         } else {
             if (hijoIzq != null) {
                 return hijoIzq.insertar(elemento, counter);
             }
+
+
+
             hijoIzq = elemento;
         }
-    
-        System.out.println(counter);
-        return true;
+
+        return new InsertResult(counter, true);
     }
 
     /**
@@ -123,15 +128,16 @@ public class TElementoAB<T> implements IElementoAB<T> {
      */
     public String preOrden() {
         String tempStr = "";
+        String separator = ", ";
 
         tempStr = tempStr + this.getEtiqueta();
 
-        if (hijoDer != null) {
-            tempStr = hijoDer.preOrden();
+        if (hijoIzq != null) {
+            tempStr += separator + hijoIzq.preOrden();
         }
 
-        if (hijoIzq != null) {
-            tempStr = hijoIzq.preOrden();
+        if (hijoDer != null) {
+            tempStr += separator + hijoDer.preOrden();
         }
 
         return tempStr;
@@ -144,15 +150,16 @@ public class TElementoAB<T> implements IElementoAB<T> {
      */
     public String inOrden() {
         String tempStr = "";
-
-        if (hijoDer != null) {
-            tempStr = hijoDer.inOrden();
-        }
-
-        tempStr = tempStr + this.getEtiqueta();
+        String separator = ", ";
 
         if (hijoIzq != null) {
-            tempStr = hijoIzq.inOrden();
+            tempStr += hijoIzq.inOrden() + separator;
+        }
+
+        tempStr += this.getEtiqueta();
+
+        if (hijoDer != null) {
+            tempStr += separator + hijoDer.inOrden();
         }
 
         return tempStr;
@@ -165,16 +172,17 @@ public class TElementoAB<T> implements IElementoAB<T> {
      */
     public String postOrden() {
         String tempStr = "";
-
-        if (hijoDer != null) {
-            tempStr = hijoDer.postOrden();
-        }
+        String separator = ", ";
 
         if (hijoIzq != null) {
-            tempStr = hijoIzq.postOrden();
+            tempStr += hijoIzq.postOrden() + separator;
         }
 
-        tempStr = tempStr + this.getEtiqueta();
+        if (hijoDer != null) {
+            tempStr += hijoDer.postOrden() + separator;
+        }
+
+        tempStr += this.getEtiqueta();
 
         return tempStr;
     }

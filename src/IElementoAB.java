@@ -39,10 +39,10 @@ public interface IElementoAB<T> {
      * Busca un elemento dentro del arbol con la etiqueta indicada.
      *
      * @param unaEtiqueta del nodo a buscar
+     * @param counter contador de operaciones
      * @return Elemento encontrado. En caso de no encontrarlo, retorna nulo.
      */
-    public TElementoAB<T> buscar(Comparable unaEtiqueta);
-
+    public SearchResult buscar(Comparable unaEtiqueta, int counter);
 
 
     /**
@@ -51,7 +51,7 @@ public interface IElementoAB<T> {
      * @param elemento Elemento a insertar.
      * @return Exito de la operaci�n.
      */
-    public boolean insertar(TElementoAB<T> elemento, int counter);
+    public InsertResult insertar(TElementoAB<T> elemento, int counter);
 
     /**
      * Imprime en preorden el arbol separado por guiones.

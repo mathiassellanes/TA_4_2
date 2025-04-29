@@ -31,7 +31,7 @@ public class ManejadorArchivosGenerico {
             e.printStackTrace();
         }
     }
-    
+
     public static String[] leerArchivo(String nombreCompletoArchivo){
         FileReader fr;
         ArrayList<String> listaLineasArchivo = new ArrayList<String>();
@@ -54,7 +54,7 @@ public class ManejadorArchivosGenerico {
 
         return listaLineasArchivo.toArray (new String [0]);
     }
-    
+
     /**
 	 * Metodo encargado de filtrar un texto, dejando solamente letras validas.-
 	 * @param unaPalabra Palabra a evaluar
@@ -68,13 +68,13 @@ public class ManejadorArchivosGenerico {
 					(caracter >= 'a' && caracter <= 'z'))
 				sb.append(caracter);
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	/**
 	    * Lee una string y devuelve las palabras que se encuentren dentro.
-	    * @param strLine Línea a procesar
+	    * @param strLine Lï¿½nea a procesar
 	    * @return Listado de palabras procesadas
 	    */
 	public static String[] palabrasPorLinea(String strLine) {
@@ -82,18 +82,18 @@ public class ManejadorArchivosGenerico {
 		    ArrayList<String> words = new ArrayList<String>();
 		    while(st.hasMoreTokens()){
 			    String temp = st.nextToken();
-			    String word = temp.replaceAll("á", "a");
-			    word = word.replaceAll("é", "e");
-			    word = word.replaceAll("í", "i");
-			    word = word.replaceAll("ó", "o");
-			    word = word.replaceAll("ú", "u");
-			    word = word.replaceAll("ñ", "n");
+			    String word = temp.replaceAll("ï¿½", "a");
+			    word = word.replaceAll("ï¿½", "e");
+			    word = word.replaceAll("ï¿½", "i");
+			    word = word.replaceAll("ï¿½", "o");
+			    word = word.replaceAll("ï¿½", "u");
+			    word = word.replaceAll("ï¿½", "n");
 			    word = word.replaceAll("\\W+", "");
 			    if (word.compareTo("") != 0){
 			    	words.add(word);
 				    //System.out.println(word);
-			    }			    
+			    }
 		    }
 		    return words.toArray(new String [0]);
-		 }	
+		 }
 }
